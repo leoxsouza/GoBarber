@@ -5,7 +5,7 @@ const moment = require('moment')
 class ScheduleController {
   async index (req, res) {
     const appointments = await Appointment.findAll({
-      include: [{ model: User }],
+      include: [{ model: User, as: 'user' }],
       where: {
         date: {
           [Op.between]: [
@@ -20,9 +20,7 @@ class ScheduleController {
       }
     })
 
-    console.log(appointments)
-
-    return res.redirect('/')
+    return res.render('schedule', { appointments })
   }
 }
 
